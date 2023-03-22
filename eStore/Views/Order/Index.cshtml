@@ -124,11 +124,6 @@ else
             <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-primary @prevDisabled">Previous</a>
             <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-primary @nextDisabled">Next</a>
         </div>
-        <div>
-            <form asp-controller="Order" asp-action="Export">
-                <input type="submit" class="btn btn-outline-success mt-3" value="Export Data" />
-            </form>
-        </div>
     }
     else
     {

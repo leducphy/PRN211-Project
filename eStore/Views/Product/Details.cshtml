@@ -50,8 +50,9 @@ else
     <div>
         @if (role.Equals("Admin"))
         {
-            <a asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> @Html.Raw("|")
-            ;
+
+            <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> @Html.Raw("|");
+
         }
         else if (role.Equals("User"))
         {
@@ -106,7 +107,9 @@ else
 
 
         }
-        <a asp-action="Index">Back to List</a>
+
+        <a class="btn btn-outline-dark" asp-action="Index"> Back to List</a>
+
     </div>
 }
 

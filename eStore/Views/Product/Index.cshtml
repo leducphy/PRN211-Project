@@ -39,7 +39,7 @@
 @if (TempData["Create"] != null && !string.IsNullOrEmpty(TempData["Create"].ToString()))
 {
     await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Create"] } });
-}W
+}
 @if (TempData["Update"] != null && !string.IsNullOrEmpty(TempData["Update"].ToString()))
 {
     await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Update"] } });

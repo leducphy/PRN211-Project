@@ -48,9 +48,9 @@
 {
     await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Delete"] } });
 }
-<div class="container row" style="display: flex; justify-content: space-evenly; width: 100%">
+<div class="container row mt-lg-4" style="display: flex; justify-content: space-evenly; width: 100%">
 
-    <div class="col col-12">
+    <div class="col col-12" >
         <form asp-action="Index" asp-controller="Product" method="get">
             <div class="form-group">
                 <div class="row">

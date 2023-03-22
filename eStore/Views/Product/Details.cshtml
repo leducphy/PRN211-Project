@@ -1,0 +1,114 @@
+﻿@model BusinessObject.Product
+
+@using System.Security.Claims
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var claim = User.Claims.SingleOrDefault(c => c.Type.Equals(ClaimTypes.Name));
+    var role = "User";
+    if (claim != null)
+    {
+        if (claim.Value.Equals("Admin"))
+        {
+            role = "Admin";
+        }
+    }
+
+    if (role.Equals("Admin"))
+    {
+        ViewData["Title"] = "Product Details";
+        <h1>Product Details</h1>
+    }
+    else
+    {
+        ViewData["Title"] = "Add To Cart";
+        <h1>Add to Cart</h1>
+    }
+}
+<hr />
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <p class="text-danger">@ViewBag.Error</p>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+else
+{
+    @if (TempData["AddError"] != null && !string.IsNullOrEmpty(TempData["AddError"].ToString()))
+    {
+        await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "danger" }, { "message", TempData["AddError"] } });
+    }
+    @if (TempData["AddSuccess"] != null && !string.IsNullOrEmpty(TempData["AddSuccess"].ToString()))
+    {
+        await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["AddSuccess"] } });
+    }
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ProductId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ProductId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ProductName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ProductName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Category)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Category.CategoryName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Weight)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Weight)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UnitPrice)
+            </dd>
+            @if (role.Equals("Admin"))
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.UnitsInStock)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UnitsInStock)
+                </dd>
+            }
+
+        </dl>
+    </div>
+    <div>
+        @if (role.Equals("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> @Html.Raw("|");
+        }
+        else if (role.Equals("User"))
+        {
+            <form asp-action="AddToCart" asp-controller="Cart" method="get">
+                <input type="hidden" name="productId" id="productId" value="@Model.ProductId" />
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="quantity" class="d-inline">Quantity: </label>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control d-inline" type="number" name="quantity" id="quantity" aria-describedby="quantityHelp" value="1" min="1" max="@Model.UnitsInStock" />
+                        <small id="quantityHelp" class="form-text text-muted">Enter Quantity you want to Order @Html.Raw("<") @(Model.UnitsInStock + 1). Default is 1</small>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Add To Cart" />
+            </form>
+        }
+        <a asp-action="Index"> Back to List</a>
+    </div>
+}

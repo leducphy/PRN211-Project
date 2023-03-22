@@ -1,0 +1,120 @@
+﻿@model PaginatedList<BusinessObject.Member>
+
+@{
+    ViewData["Title"] = "Member Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Member Management</h1>
+
+<p>
+    <a class="btn btn-outline-info" asp-action="Create">Create New Member</a>
+</p>
+
+@if (TempData["Create"] != null && !string.IsNullOrEmpty(TempData["Create"].ToString()))
+{
+    await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Create"] } });
+}
+@if (TempData["Update"] != null && !string.IsNullOrEmpty(TempData["Update"].ToString()))
+{
+    await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Update"] } });
+}
+@if (TempData["Delete"] != null && !string.IsNullOrEmpty(TempData["Delete"].ToString()))
+{
+    await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Delete"] } });
+}
+
+<form asp-action="Index" asp-controller="Member" method="get">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="search" class="d-inline">Search by Name: </label>
+            </div>
+            <div class="col-md-6">
+                <input id="search" name="search" class="d-inline form-control" value="@ViewBag.Search" />
+            </div>
+            <div class="col-md-3">
+                <input type="submit" class="btn btn-outline-primary d-inline mt-sm-3 mt-md-0" value="Search" />
+            </div>
+        </div>
+
+    </div>
+</form>
+@if (!Model.Any())
+{
+    <div class="text-danger">No results found!!</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Member ID
+                </th>
+                <th>
+                    Fullname
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Company Name
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    Country
+                </th>
+                <th>
+                    Password
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MemberId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fullname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.MemberId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.MemberId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.MemberId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    // Phân trang
+<div>
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+    <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-primary @prevDisabled">Previous</a>
+    <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-primary @nextDisabled">Next</a>
+</div>
+}

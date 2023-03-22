@@ -1,0 +1,187 @@
+﻿@model PaginatedList<BusinessObject.Product>
+
+@using System.Security.Claims
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var claim = User.Claims.SingleOrDefault(c => c.Type.Equals(ClaimTypes.Name));
+    var role = "User";
+    if (claim != null)
+    {
+        if (claim.Value.Equals("Admin"))
+        {
+            role = "Admin";
+        }
+    }
+
+    if (role.Equals("Admin"))
+    {
+        ViewData["Title"] = "Product Management";
+        <h1>Product Management</h1>
+    }
+    else
+    {
+        ViewData["Title"] = "Shopping";
+        <h1>Shopping</h1>
+    }
+}
+
+@if (role.Equals("Admin"))
+{
+    <p>
+        <a class="btn btn-outline-info" asp-action="Create">Create New Product</a>
+    </p>
+}
+
+
+
+@if (TempData["Create"] != null && !string.IsNullOrEmpty(TempData["Create"].ToString()))
+{
+    await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Create"] } });
+}
+@if (TempData["Update"] != null && !string.IsNullOrEmpty(TempData["Update"].ToString()))
+{
+    await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Update"] } });
+}
+@if (TempData["Delete"] != null && !string.IsNullOrEmpty(TempData["Delete"].ToString()))
+{
+    await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Delete"] } });
+}
+
+<form asp-action="Index" asp-controller="Product" method="get">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="search" class="d-inline">Search by Product Name: </label>
+            </div>
+            <div class="col-md-8">
+                <input id="search" name="search" class="d-inline form-control" value="@ViewBag.Search" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <label for="from" class="d-inline">Unit Price:</label>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="form" class="d-inline">From</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input id="from" name="from" aria-describedby="unitPriceHelp" class="d-inline form-control" value="@ViewBag.From" type="number" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="to" class="d-inline">To</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input id="to" name="to" class="d-block form-control" value="@ViewBag.To" type="number" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-3">
+                <small id="unitPriceHelp" class="form-text text-muted">Leave the two inputs both blank if you don't want to filter by Unit Price</small>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-3">
+                <input type="submit" class="btn btn-outline-primary d-inline mt-sm-3 mt-md-0" value="Search" />
+            </div>
+        </div>
+    </div>
+</form>
+@if (ViewBag.Error != null)
+{
+    <div class="row mt-3">
+        <div class="alert alert-danger" role="alert">@ViewBag.Error</div>
+    </div>
+}
+else
+{
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-danger">No results found!!</div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Product ID
+                    </th>
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Weight
+                    </th>
+                    <th>
+                        Unit Price
+                    </th>
+                    <th>
+                        Units In Stock
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Weight)
+                        </td>
+                        <td>
+                            @Math.Round(item.UnitPrice, 2)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitsInStock)
+                        </td>
+
+                        <td>
+                            @if (role.Equals("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> @Html.Raw("&verbar;")
+                                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> @Html.Raw("&verbar;")
+                                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                            }
+                            else if (role.Equals("User"))
+                            {
+                                <a asp-action="Details" asp-route-id="@item.ProductId">Add to Cart</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        // Phân trang
+        <div>
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+            <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-primary @prevDisabled">Previous</a>
+            <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-primary @nextDisabled">Next</a>
+        </div>
+    }
+}

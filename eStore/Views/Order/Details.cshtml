@@ -50,6 +50,7 @@ else
         <table class="table table-hover table-bordered table-striped">
             <thead class="table-primary">
                 <tr>
+                    <th></th>
                     <th>
                         Product Name
                     </th>
@@ -69,6 +70,7 @@ else
                 {
                     decimal price = Math.Round(orderDetails.UnitPrice * (1 - Convert.ToDecimal(orderDetails.Discount)), 2);
                     <tr>
+                        <td style="width: 20%"><img style="width: 100%" src="~/img/image.jpg" /></td>
                         <td>
                             @orderDetails.Product.ProductName
                         </td>

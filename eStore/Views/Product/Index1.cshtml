@@ -134,8 +134,23 @@
                 <div class="product-list row mb-3">
                     @foreach (var item in Model)
                     {
-                        <div class="product text-center pb-2" style="width: 21%; margin: 10px 10px; background-color: rgba(247, 240, 244, 0.8); border-radius: 5px; border: none">
-                            <img class="product-img" src="~/img/iphone-14-pro-93.jpg" /><br>
+                        <div class="product text-center pb-2" style="height: auto; width: 21%; margin: 10px 10px; background-color: rgba(247, 240, 244, 0.8); border-radius: 5px; border: none; padding-top: 4px">
+                            @if(item.CategoryId==1){
+                                <img class="product-img" src="~/img/iphone.webp" />
+
+                                <br>
+                            }else if (item.CategoryId==2)
+                            {
+                                <img class="product-img" src="~/img/polo.webp" />
+
+                                <br>
+                            }
+                            else
+                            {
+                                <img class="product-img" src="~/img/img1.webp" />
+
+                                <br>
+                            }
                             <div class="name"><a href="detail.jsp?model=${p.getProductID()}">@item.ProductName</a></div>
                             <div class="price">@item.UnitPrice</div>
                             <div>
@@ -163,6 +178,11 @@
 </div>
 
 <style>
+    .product{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
     .list-product-container {
         display: flex;
         flex-wrap: wrap;

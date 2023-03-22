@@ -29,8 +29,8 @@ else
     }
     else
     {
-        <table class="table">
-            <thead>
+        <table class="table table-hover table-bordered table-striped">
+            <thead class="table-primary">
                 <tr>
                     <th>
                         Product Name
@@ -44,7 +44,9 @@ else
                     <th>
                         Total
                     </th>
-                    <th></th>
+                    <th>
+                        Action
+                    </th>
                 </tr>
             </thead>
             @foreach (var cartItem in Model)
@@ -75,6 +77,12 @@ else
             <tbody>
             </tbody>
         </table>
-        <a asp-action="CheckOut" class="btn btn-outline-success mt-3">Check Out</a>
+        <a asp-action="CheckOut" class="btn btn-outline-success mt-3">Order</a>
+
+                <style>
+                .table tbody tr:hover {
+                    background-color: lightblue;
+                }
+            </style>
     }
 }

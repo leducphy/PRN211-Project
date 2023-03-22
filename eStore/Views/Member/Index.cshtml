@@ -8,7 +8,7 @@
 <h1>Member Management</h1>
 
 <p>
-    <a class="btn btn-outline-info" asp-action="Create">Create New Member</a>
+    <a class="btn btn-outline-info" asp-action="Create">+ Create New Member</a>
 </p>
 
 @if (TempData["Create"] != null && !string.IsNullOrEmpty(TempData["Create"].ToString()))
@@ -46,8 +46,8 @@
 }
 else
 {
-    <table class="table">
-        <thead>
+    <table class="table table-hover table-bordered table-striped">
+        <thead class="table-primary">
             <tr>
                 <th>
                     Member ID
@@ -70,7 +70,9 @@ else
                 <th>
                     Password
                 </th>
-                <th></th>
+                <th>
+                    Action
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -99,9 +101,9 @@ else
                         @Html.DisplayFor(modelItem => item.Password)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.MemberId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.MemberId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.MemberId">Delete</a>
+                        <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.MemberId">Edit</a> |
+                        <a class="btn btn-success" asp-action="Details" asp-route-id="@item.MemberId">Details</a> |
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.MemberId">Delete</a>
                     </td>
                 </tr>
             }
@@ -117,4 +119,14 @@ else
     <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-primary @prevDisabled">Previous</a>
     <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-primary @nextDisabled">Next</a>
 </div>
+
+    <style>
+        .table tbody tr:hover {
+            background-color: lightblue;
+        }
+
+        .table a {
+            text-decoration: none;
+        }
+    </style>
 }

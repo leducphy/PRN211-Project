@@ -14,7 +14,7 @@
         @ViewBag.Error
     </div>
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-outline-dark" asp-action="Index">Back to List</a>
     </div>
 }
 else
@@ -65,7 +65,7 @@ else
         <form asp-action="Delete">
             <input type="hidden" asp-for="ProductId" />
             <input type="submit" value="Delete" class="btn btn-danger" /> |
-            <a asp-action="Index">Back to List</a>
+            <a class="btn btn-outline-dark" asp-action="Index">Back to List</a>
         </form>
     </div>
 }

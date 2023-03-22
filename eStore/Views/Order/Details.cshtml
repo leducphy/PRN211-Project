@@ -47,8 +47,8 @@ else
         </dl>
     </div>
     <div>
-        <table class="table">
-            <thead>
+        <table class="table table-hover table-bordered table-striped">
+            <thead class="table-primary">
                 <tr>
                     <th>
                         Product Name
@@ -87,7 +87,13 @@ else
         </table>
     </div>
     <div>
-        <a asp-action="Delete" asp-route-id="@Model.OrderId">Delete Order</a> |
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.OrderId">Delete Order</a> |
+        <a class="btn btn-outline-dark" asp-action="Index">Back to List</a>
     </div>
+
+        <style>
+            .table tbody tr:hover {
+                background-color: lightblue;
+            }
+        </style>
 }

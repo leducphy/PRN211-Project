@@ -23,7 +23,11 @@ else
                 <div class="form-group">
                     <label asp-for="CategoryId" class="control-label"></label>
                     <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Category"></select>
-                    <small class="text-muted form-text"><a asp-action="Create" asp-controller="Category" data-toggle="modal" data-target="#createCategory">Create new Category</a></small>
+                    <small class="text-muted form-text">
+                        <a class="btn btn-sm btn-outline-info" asp-action="Create" asp-controller="Category" data-toggle="modal" data-target="#createCategory">
+                            + Create new Category
+                        </a>
+                        </small>
                 </div>
                 <div class="form-group">
                     <label asp-for="ProductName" class="control-label"></label>
@@ -53,7 +57,7 @@ else
     </div>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-outline-dark" asp-action="Index">Back to List</a>
     </div>
 
     <!-- Modal -->

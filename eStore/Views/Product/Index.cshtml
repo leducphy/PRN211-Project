@@ -30,7 +30,7 @@
 @if (role.Equals("Admin"))
 {
     <p>
-        <a class="btn btn-outline-info" asp-action="Create">Create New Product</a>
+        <a class="btn btn-outline-info" asp-action="Create">+ Create New Product</a>
     </p>
 }
 
@@ -110,8 +110,8 @@ else
     }
     else
     {
-        <table class="table">
-            <thead>
+        <table class="table table-hover table-bordered table-striped">
+            <thead class="table-primary">
                 <tr>
                     <th>
                         Product ID
@@ -131,7 +131,9 @@ else
                     <th>
                         Units In Stock
                     </th>
-                    <th></th>
+                    <th>
+                        Action
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -160,13 +162,13 @@ else
                         <td>
                             @if (role.Equals("Admin"))
                             {
-                                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> @Html.Raw("&verbar;")
-                                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> @Html.Raw("&verbar;")
-                                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                                <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> @Html.Raw("&verbar;")
+                                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.ProductId">Details</a> @Html.Raw("&verbar;")
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
                             }
                             else if (role.Equals("User"))
                             {
-                                <a asp-action="Details" asp-route-id="@item.ProductId">Add to Cart</a>
+                                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.ProductId">+ Add to Cart</a>
                             }
                         </td>
                     </tr>
@@ -174,7 +176,7 @@ else
             </tbody>
         </table>
 
-        // Phân trang
+                    // Phân trang
         <div>
             @{
                 var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
@@ -183,5 +185,11 @@ else
             <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-primary @prevDisabled">Previous</a>
             <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-primary @nextDisabled">Next</a>
         </div>
+
+        <style>
+            .table tbody tr:hover {
+                background-color: lightblue;
+            }
+        </style>
     }
 }

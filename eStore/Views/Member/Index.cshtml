@@ -25,19 +25,14 @@
 }
 
 <form asp-action="Index" asp-controller="Member" method="get">
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-3">
-                <label for="search" class="d-inline">Search by Name: </label>
-            </div>
-            <div class="col-md-6">
-                <input id="search" name="search" class="d-inline form-control" value="@ViewBag.Search" />
-            </div>
-            <div class="col-md-3">
-                <input type="submit" class="btn btn-outline-primary d-inline mt-sm-3 mt-md-0" value="Search" />
-            </div>
+    <div class="input-group w-25" style="margin-left: 75%; margin-bottom: 20px;">
+        <div class="form-outline">
+            <input name="search" type="search" id="form1" class="form-control" value="@ViewBag.Search" />
+            <label class="form-label" for="form1">Search by Name</label>
         </div>
-
+        <button type="submit" class="btn btn-primary" name="Search">
+            <i class="fas fa-search"></i>
+        </button>
     </div>
 </form>
 @if (!Model.Any())
@@ -67,9 +62,9 @@ else
                 <th>
                     Country
                 </th>
-                <th>
+                @*<th>
                     Password
-                </th>
+                </th>*@
                 <th>
                     Action
                 </th>
@@ -97,12 +92,10 @@ else
                     <td>
                         @Html.DisplayFor(modelItem => item.Country)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.Password)
-                    </td>
-                    <td>
-                        <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.MemberId">Edit</a> |
-                        <a class="btn btn-success" asp-action="Details" asp-route-id="@item.MemberId">Details</a> |
+                    </td>*@
+                    <td> 
                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.MemberId">Delete</a>
                     </td>
                 </tr>

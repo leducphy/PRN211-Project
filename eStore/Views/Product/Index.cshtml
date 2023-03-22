@@ -56,43 +56,47 @@
                 <label for="search" class="d-inline">Search by Product Name: </label>
             </div>
             <div class="col-md-8">
-                <input id="search" name="search" class="d-inline form-control" value="@ViewBag.Search" />
+                <div class="form-outline w-50">
+                    <input name="search" type="search" id="form1" class="form-control" value="@ViewBag.Search" />
+                    <label class="form-label" for="form1">Search by Product Name</label>
+                </div>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-3">
                 <label for="from" class="d-inline">Unit Price:</label>
             </div>
-            <div class="col-md-4">
+            <div class=" col-md-4 d-flex">
                 <div class="row">
-                    <div class="col-md-2">
-                        <label for="form" class="d-inline">From</label>
-                    </div>
-                    <div class="col-md-10">
-                        <input id="from" name="from" aria-describedby="unitPriceHelp" class="d-inline form-control" value="@ViewBag.From" type="number" />
+                    <div class="col-md-11">
+                        <div class="form-outline">
+                            <input name="from" type="number" id="from" class="form-control" aria-describedby="unitPriceHelp" value="@ViewBag.Search" />
+                            <label class="form-label" for="form1">Unit Price: From ($)</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-2">
-                        <label for="to" class="d-inline">To</label>
+                    <div class="col-md-11">
+                        <div class="form-outline">
+                            <input name="to" type="number" id="to" class="form-control" aria-describedby="unitPriceHelp" value="@ViewBag.Search" />
+                            <label class="form-label" for="form1">Unit Price: To ($)</label>
+                        </div>
                     </div>
-                    <div class="col-md-10">
-                        <input id="to" name="to" class="d-block form-control" value="@ViewBag.To" type="number" />
+                </div>
+                <div class="row">
+                    <div class="col-md-11">
+                        <button type="submit" class="btn btn-primary" name="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="offset-md-3">
-                <small id="unitPriceHelp" class="form-text text-muted">Leave the two inputs both blank if you don't want to filter by Unit Price</small>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-3">
-                <input type="submit" class="btn btn-outline-primary d-inline mt-sm-3 mt-md-0" value="Search" />
-            </div>
+
+    </div>
+    <div class="row">
+        <div class="offset-md-3">
+            <small id="unitPriceHelp" class="form-text text-muted">Leave the two inputs both blank if you don't want to filter by Unit Price</small>
         </div>
     </div>
 </form>
@@ -168,7 +172,7 @@ else
                             }
                             else if (role.Equals("User"))
                             {
-                                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.ProductId">+ Add to Cart</a>
+                                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.ProductId"><i class="fa-solid fa-cart-plus"></i></a>
                             }
                         </td>
                     </tr>

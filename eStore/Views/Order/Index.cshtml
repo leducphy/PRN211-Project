@@ -78,6 +78,7 @@ else
                     <th>
                         Action
                     </th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -99,6 +100,15 @@ else
                         <td>
                             <a class="btn btn-success" asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
                             <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                        </td>
+                        <td>
+                            @if(item.OrderDate != null && item.ShippedDate == null){
+                                <p class="text-dark">Pending</p>
+                            }
+                            else if(item.OrderDate != null && item.ShippedDate != null)
+                            {
+                                <p class="text-success">Successfully</p>
+                            }
                         </td>
                     </tr>
                 }

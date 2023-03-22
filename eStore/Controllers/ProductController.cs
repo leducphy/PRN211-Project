@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace eStore.Controllers
@@ -26,8 +27,10 @@ namespace eStore.Controllers
 
         [Authorize(Roles = "User, Admin")]
         // GET: ProductController
-        public async Task<IActionResult> Index(string search, decimal? from, decimal? to, int? page)
+        public async Task<IActionResult> Index(string search, decimal? from, decimal? to, int? page, int category = 0)
         {
+            SalesManagementContext context = new SalesManagementContext();
+            ViewBag.Categories = context.Categories.ToList();
             try
             {
                 ViewBag.Search = search;
@@ -39,7 +42,20 @@ namespace eStore.Controllers
                     page = 1;
                 }
 
-                IEnumerable<Product> products = productRepository.GetProductsList().OrderByDescending(pro => pro.ProductName);
+                IEnumerable<Product> products;
+
+                ViewBag.SelectedCate = category;
+
+                if (category != 0)
+                {
+                    products = productRepository.GetProductsList().Where(p=>p.CategoryId==category).OrderByDescending(pro => pro.ProductName);
+                }
+                else
+                {
+                    products = productRepository.GetProductsList().OrderByDescending(pro => pro.ProductName);
+                }
+
+               
                 if (!string.IsNullOrEmpty(search))
                 {
                     products = productRepository.SearchProduct(search, products);
@@ -59,13 +75,29 @@ namespace eStore.Controllers
                     throw new Exception("Please fill both of the Unit Price inputs to filter or leave them blank!");
                 }
 
-                int pageSize = 10;
+                int pageSize = 8;
 
-                return View(await PaginatedList<Product>.CreateAsync(products.AsQueryable(), page ?? 1, pageSize));
+                if (User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Name)).Value.Equals("Admin"))
+                {
+                    return View(await PaginatedList<Product>.CreateAsync(products.AsQueryable(), page ?? 1, pageSize));
+                }
+                else
+                {
+                    return View("Index1", await PaginatedList<Product>.CreateAsync(products.AsQueryable(), page ?? 1, pageSize));
+                }
+
+               
             } catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
-                return View();
+                if (User.Claims.FirstOrDefault(c => c.Type.Equals(ClaimTypes.Name)).Value.Equals("Admin"))
+                {
+                    return View();
+                }
+                else
+                {
+                    return View("Index1");
+                }
             }
             
         }

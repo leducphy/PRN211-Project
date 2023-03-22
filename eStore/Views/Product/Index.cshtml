@@ -39,7 +39,7 @@
 @if (TempData["Create"] != null && !string.IsNullOrEmpty(TempData["Create"].ToString()))
 {
     await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Create"] } });
-}
+}W
 @if (TempData["Update"] != null && !string.IsNullOrEmpty(TempData["Update"].ToString()))
 {
     await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["Update"] } });
@@ -182,8 +182,8 @@ else
                 var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
                 var nextDisabled = !Model.HasNextPage ? "disabled" : "";
             }
-            <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-primary @prevDisabled">Previous</a>
-            <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-primary @nextDisabled">Next</a>
+            <a asp-action="Index1" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-primary @prevDisabled">Previous</a>
+            <a asp-action="Index1" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-primary @nextDisabled">Next</a>
         </div>
 
         <style>

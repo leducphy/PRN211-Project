@@ -45,13 +45,14 @@ else
         await Html.RenderPartialAsync("Alert", new ViewDataDictionary(ViewData) { { "role", "success" }, { "message", TempData["AddSuccess"] } });
     }
     <div>
-        <p>Home/Electronics/@Model.ProductId</p>    
+        <p>Home/Electronics/@Model.ProductId</p>
     </div>
     <div>
         @if (role.Equals("Admin"))
         {
 
-            <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> @Html.Raw("|");
+            <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> @Html.Raw("|")
+            ;
 
         }
         else if (role.Equals("User"))
@@ -64,13 +65,53 @@ else
                     <div id="product-detail">
                         <div id="product-detail-left">
                             <div id="product-img">
-                                <img class="" src="~/img/iphone-14-pro-93.jpg" />
+                                @if (Model.CategoryId == 1)
+                                {
+                                    <img class="product-img" src="~/img/iphone.webp" />
+
+                                    <br>
+                                }
+                                else if (Model.CategoryId == 2)
+                                {
+                                    <img class="product-img" src="~/img/polo.webp" />
+
+                                    <br>
+                                }
+                                else
+                                {
+                                    <img class="product-img" src="~/img/img1.webp" />
+
+                                    <br>
+                                }
                             </div>
                             <div id="product-img-items">
-                                <img src="~/img/iphone-14-pro-93.jpg" />
-                                <img src="~/img/iphone-14-pro-93.jpg" />
-                                <img src="~/img/iphone-14-pro-93.jpg" />
-                                <img src="~/img/iphone-14-pro-93.jpg" />
+                                @if (Model.CategoryId == 1)
+                                {
+                                    <img class="product-img" src="~/img/iphone.webp" />
+                                    <img class="product-img" src="~/img/iphone.webp" />
+                                    <img class="product-img" src="~/img/iphone.webp" />
+                                    <img class="product-img" src="~/img/iphone.webp" />
+                                    <br>
+                                }
+                                else if (Model.CategoryId == 2)
+                                {
+                                    <img class="product-img" src="~/img/images.jfif" />
+                                    <img class="product-img" src="~/img/images.jfif" />
+                                    <img class="product-img" src="~/img/images.jfif" />
+                                    <img class="product-img" src="~/img/images.jfif" />
+
+                                    <br>
+                                }
+                                else
+                                {
+
+                                    <img class="product-img" src="~/img/img1.webp" />
+                                    <img class="product-img" src="~/img/img1.webp" />
+                                    <img class="product-img" src="~/img/img1.webp" />
+                                    <img class="product-img" src="~/img/img1.webp" />
+
+                                    <br>
+                                }
                             </div>
                         </div>
                         <div id="product-detail-right">
@@ -103,12 +144,9 @@ else
                 </div>
             </div>
 
-
-
-
         }
 
-        <a class="btn btn-outline-dark" asp-action="Index"> Back to List</a>
+        <a class="btn btn-outline-dark" asp-action="Index" style="margin-bottom: 50px"> Back to List</a>
 
     </div>
 }

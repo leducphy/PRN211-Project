@@ -134,7 +134,7 @@ namespace eStore.Controllers
         }
 
         [Authorize(Roles = "User")]
-        public IActionResult CheckOut()
+        public IActionResult Order()
         {
             Cart cart = HttpContext.Session.GetComplexData<Cart>("CART");
 

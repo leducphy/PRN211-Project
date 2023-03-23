@@ -1,4 +1,4 @@
-﻿@model PaginatedList<BusinessObject.Order>
+@model PaginatedList<BusinessObject.Order>
 
 @{
     ViewData["Title"] = "Order Management";
@@ -40,7 +40,9 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <input type="submit" class="btn btn-outline-primary d-inline mt-sm-3 mt-md-0" value="Search" />
+                <button type="submit" class="btn btn-primary" name="Search">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
         </div>
         <div class="row">

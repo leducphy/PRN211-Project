@@ -95,8 +95,11 @@ else
                     @*<td>
                         @Html.DisplayFor(modelItem => item.Password)
                     </td>*@
-                    <td> 
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.MemberId">Delete</a>
+                    <td>
+                        @if (item.Email != "admin@estore.com")
+                        {
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.MemberId">Delete</a>
+                        }
                     </td>
                 </tr>
             }

@@ -2,7 +2,7 @@
     ViewData["Title"] = "Forgot Password";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<p style="margin-top:20px"><a href="/Login">Back to login</a></p>
+
 <section class="vh-100" style="background-color: #9A616D;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -34,6 +34,7 @@
                                             Send
                                         </button>
                                     </div>
+                                    <p style="margin-top:20px"><a href="/Login">Back to login</a></p>
                                 </form>
                                 @if (!string.IsNullOrEmpty(ViewBag.Message))
                                 {
